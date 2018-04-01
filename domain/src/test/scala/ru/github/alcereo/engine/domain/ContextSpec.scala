@@ -1,6 +1,6 @@
 package ru.github.alcereo.engine.domain
 
-import com.github.alcereo.engine.domain.{Context, PropsExchangeNames, TaskResult}
+import com.github.alcereo.engine.domain.context.{Context, PropsExchangeNames, TaskResult}
 import org.scalatest.{FunSpec, Matchers}
 
 class ContextSpec extends FunSpec with Matchers{
@@ -9,7 +9,7 @@ class ContextSpec extends FunSpec with Matchers{
 
     it("should exchange data"){
 
-      val context = Context.emptyContext
+      val context = Context.empty
 
       context.getProperty("prop1") shouldBe None
 
@@ -34,11 +34,11 @@ class ContextSpec extends FunSpec with Matchers{
 
     it("should set result"){
 
-      val context = Context.emptyContext
+      val context = Context.empty
 
       context.result shouldBe None
 
-      val result = TaskResult.SuccessResult()
+      val result = TaskResult.success
 
       context.setResult(
         result

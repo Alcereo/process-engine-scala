@@ -1,19 +1,24 @@
-package com.github.alcereo.engine.domain
+package com.github.alcereo.engine.domain.context
 
 trait Context {
+
+  def properties: Map[String, Object]
   def exchangeData(externalContext: Context, propsExchangeNames: List[PropsExchangeNames]):Context
   def getProperty(name:String): Option[Object]
+
   def result: Option[TaskResult]
   def setResult(result: TaskResult): Context
 }
 
 object Context{
 
-  def emptyContext = ContextImpl(Map.empty, None)
+  def empty = ContextImpl(Map.empty, None)
 
   def apply(properties: Map[String, Object], result: Option[TaskResult] = None) =
     ContextImpl(properties, result)
 
+  def unapply(self: Context): Option[(Map[String, Object], Option[TaskResult])] =
+    Some((self.properties, self.result))
 
   case class ContextImpl(properties: Map[String, Object],
                          result: Option[TaskResult] = None)
