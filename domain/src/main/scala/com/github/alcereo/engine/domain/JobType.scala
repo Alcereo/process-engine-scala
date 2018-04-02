@@ -5,7 +5,9 @@ sealed trait JobType {
 
 object JobType {
 
-  case class EmptyBehaviorJobType() extends JobType
+  def empty: JobType = EmptyBehaviorJobType()
+
+  private case class EmptyBehaviorJobType() extends JobType
 
 }
 

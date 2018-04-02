@@ -3,7 +3,7 @@ import com.github.alcereo.engine.domain.context.{Context, TaskResult}
 import com.github.alcereo.engine.domain.task.SimpleResultDecisionTask.ResultNotSet
 import com.github.alcereo.engine.domain.task.Task.ErrorInJob
 
-trait JobResulted extends JobHaved with JobContexted{
+trait JobResulted extends JobContexted{
   this:JobContexted =>
 
   val previousResultOpt: Option[TaskResult]

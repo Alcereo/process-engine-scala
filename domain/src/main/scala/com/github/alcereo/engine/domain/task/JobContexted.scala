@@ -3,7 +3,7 @@ package com.github.alcereo.engine.domain.task
 import com.github.alcereo.engine.domain.context.{Context, PropertiesExchangeData}
 import com.github.alcereo.engine.domain.task.Task.{ErrorInJob, TaskError}
 
-trait JobContexted extends Task{
+trait JobContexted extends JobHaved{
   this: JobHaved =>
 
   def propsExchangeData: PropertiesExchangeData

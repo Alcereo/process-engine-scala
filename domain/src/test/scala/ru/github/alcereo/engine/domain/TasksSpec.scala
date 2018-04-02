@@ -3,7 +3,7 @@ package ru.github.alcereo.engine.domain
 import java.util.UUID
 
 import com.github.alcereo.engine.domain.TaskJob
-import com.github.alcereo.engine.domain.context.{Context, PropertiesExchangeData}
+import com.github.alcereo.engine.domain.context.{Context, PropertiesExchangeData, TaskResult}
 import com.github.alcereo.engine.domain.task.{OneDirectionTask, SimpleResultDecisionTask, Task}
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{FunSpec, Matchers}
@@ -29,10 +29,10 @@ class TasksSpec extends FunSpec with Matchers with MockitoSugar{
 
   describe("Simple-result decision task"){
 
-    it("should give success task on success result"){
+    val successTaskMock = mock[Task]
+    val failureTaskMock = mock[Task]
 
-      val successTaskMock = mock[Task]
-      val failureTaskMock = mock[Task]
+    it("should give success task on success result"){
 
       val task = SimpleResultDecisionTask(
         uid = UUID.randomUUID(),
@@ -47,14 +47,11 @@ class TasksSpec extends FunSpec with Matchers with MockitoSugar{
           properties = Map(),
           result = Some(TaskResult.success)
         )
-      ).map(_.nextTaskOpt) shouldBe Right(Some(successTaskMock))
+      ).map(_.nextTaskOpt).getOrElse(None) shouldBe Some(successTaskMock)
 
     }
 
     it("should give failure task on failure result"){
-
-      val successTaskMock = mock[Task]
-      val failureTaskMock = mock[Task]
 
       val task = SimpleResultDecisionTask(
         uid = UUID.randomUUID(),
@@ -69,7 +66,7 @@ class TasksSpec extends FunSpec with Matchers with MockitoSugar{
           properties = Map(),
           result = Some(TaskResult.failure)
         )
-      ).map(_.nextTaskOpt) shouldBe Right(Some(failureTaskMock))
+      ).map(_.nextTaskOpt).getOrElse(None) shouldBe Some(failureTaskMock)
 
     }
 
